@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ufc-blue: #0378A6;
+  --color-ufc-green: #038C33;
+  --color-ufc-yellow: #F2CB05;
+  --color-ufc-gold: #D9B341;
+  --color-ufc-orange: #F28705;
+}
+
+@layer base {
+  body {
+    @apply bg-gray-100 font-sans text-gray-900 antialiased;
+  }
+}
