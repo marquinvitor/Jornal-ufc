@@ -36,7 +36,7 @@ export const RegisterForm = () => {
         registerUser(formData),
         {
           loading: "Criando sua conta no Jornal da UFC...",
-          success: "Usuário cadastrado com sucesso! 🎉",
+          success: "Usuário cadastrado com sucesso!",
           error: (err) =>
             `Erro ao cadastrar: ${err.message || "Tente novamente."}`,
         },
