@@ -1,0 +1,23 @@
+# --- SEGURANÇA (O mais importante) ---
+.env
+.env.local
+
+*.json
+
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+
+.venv/
+venv/
+env/
+
+
+.vscode/
+.idea/
+
+
+.DS_Store
+Thumbs.db
