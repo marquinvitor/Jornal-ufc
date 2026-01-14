@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "../../../components/Input";
 import { registerUser } from "../services/authService";
 
 export const RegisterForm = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     nomeCompleto: "",
@@ -15,7 +16,9 @@ export const RegisterForm = () => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -31,8 +34,8 @@ export const RegisterForm = () => {
 
     setLoading(true);
 
-    toast
-      .promise(
+    try {
+      await toast.promise(
         registerUser(formData),
         {
           loading: "Criando sua conta no Jornal da UFC...",
@@ -42,14 +45,18 @@ export const RegisterForm = () => {
         },
         {
           success: {
-            duration: 5000,
+            duration: 3000,
             icon: "✅",
           },
         }
-      )
-      .finally(() => {
-        setLoading(false);
-      });
+      );
+
+      navigate("/feed");
+    } catch (error) {
+      console.error("Erro no fluxo de cadastro:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -117,8 +124,8 @@ export const RegisterForm = () => {
       <div className="mt-6 text-center">
         <p className="text-[10px] text-gray-400 font-bold uppercase tracking-tight">
           Já possui uma conta?{" "}
-          <Link 
-            to="/login" 
+          <Link
+            to="/login"
             className="text-ufc-blue cursor-pointer hover:underline"
           >
             Faça login aqui

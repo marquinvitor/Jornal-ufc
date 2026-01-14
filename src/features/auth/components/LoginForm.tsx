@@ -12,7 +12,11 @@ export const LoginForm = () => {
     senha: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -41,25 +45,27 @@ export const LoginForm = () => {
     e.preventDefault();
     setLoading(true);
 
-    toast.promise(
-      loginUser(formData),
-      {
-        loading: "Autenticando no Jornal da UFC...",
-        success: () => {
-          navigate("/feed");
-          return "Bem-vindo!";
+    toast
+      .promise(
+        loginUser(formData),
+        {
+          loading: "Autenticando no Jornal da UFC...",
+          success: () => {
+            navigate("/feed");
+            return "Bem-vindo!";
+          },
+          error: (err) => getFriendlyErrorMessage(err),
         },
-        error: (err) => getFriendlyErrorMessage(err),
-      },
-      {
-        success: {
-          duration: 4000,
-          icon: "🔑",
-        },
-      }
-    ).finally(() => {
-      setLoading(false);
-    });
+        {
+          success: {
+            duration: 4000,
+            icon: "🔑",
+          },
+        }
+      )
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (

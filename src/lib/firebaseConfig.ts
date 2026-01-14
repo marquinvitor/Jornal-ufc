@@ -1,4 +1,3 @@
-
 import { initializeApp } from "firebase/app";
 import { getAuth } from "@firebase/auth";
 import { getFirestore } from "@firebase/firestore";
@@ -6,13 +5,13 @@ import { getFirestore } from "@firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDdJUzRW885v8i9BVE1b6qJun4M3hdmP4k",
-  authDomain: "jornal-6153f.firebaseapp.com",
-  projectId: "jornal-6153f",
-  storageBucket: "jornal-6153f.firebasestorage.app",
-  messagingSenderId: "641673971158",
-  appId: "1:641673971158:web:86a451415159433553d077",
-  measurementId: "G-4KCW465EH8"
+  apiKey: "AIzaSyA2VdEiMHiQ9eq7JXdANGFfTyML-_6CgK4",
+  authDomain: "jornal-bbb28.firebaseapp.com",
+  projectId: "jornal-bbb28",
+  storageBucket: "jornal-bbb28.firebasestorage.app",
+  messagingSenderId: "124866415264",
+  appId: "1:124866415264:web:a1c532c6b4011de80397c5",
+  measurementId: "G-5HBD2D7YWF",
 };
 
 // Initialize Firebase

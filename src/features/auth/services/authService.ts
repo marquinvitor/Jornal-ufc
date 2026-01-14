@@ -4,7 +4,7 @@ import {
   signInWithEmailAndPassword,
   type User 
 } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 
 export interface RegisterUserData {
   nomeCompleto: string;
@@ -31,11 +31,10 @@ export const registerUser = async (
   const user = userCredential.user;
 
   await setDoc(doc(db, "users", user.uid), {
-    username: userData.nomeCompleto,
-    email: userData.emailInstitucional,
-    matricula: userData.matricula,
-    perfil: userData.perfil,
-    createdAt: serverTimestamp(),
+    nome: userData.nomeCompleto,
+  email: userData.emailInstitucional,
+  matricula: userData.matricula,
+  tipo: userData.perfil,
   });
 
   return user;
