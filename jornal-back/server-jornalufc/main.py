@@ -23,6 +23,15 @@ if not firebase_admin._apps:
 db = firestore.client()
 app = FastAPI(title="API Jornal UFC")
 
+# Configuração de CORS: Essencial para que o Front-end (Vite) consiga acessar a API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # --- MODELOS DE DADOS (Enums e Pydantic) ---
 
 class CategoriaEnum(str, Enum):
