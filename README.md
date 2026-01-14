@@ -2,7 +2,7 @@
 
 API do Jornal UFC feita com *Python (FastAPI)* e *Firebase*.
 
-## 🛠️ 1. Pré-requisitos
+## 1. Pré-requisitos
 
 * *Python 3.10+* instalado.
 * *Pip* instalado.
@@ -42,7 +42,7 @@ CREDS="firebase_key.json"
 
 ---
 
-## 🚀 4. Rodando o Servidor
+## 4. Rodando o Servidor
 
 Para iniciar a API, execute o comando:
 
