@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# Front-end Jornal UFC - Guia de Execução
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface do portal de notícias desenvolvida com **React (Vite)** e **integração com Firebase**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 1. Pré-requisitos
 
-## React Compiler
+- **Node.js (versão 18 ou superior)** instalado
+- Gerenciador de pacotes **npm** instalado
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 2. Instalação
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Passo 1: Instalar as dependências
 
-```js
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
+Abra o terminal na pasta do projeto frontend e execute o comando abaixo para baixar as bibliotecas necessárias:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+## 3. Configuração das Variáveis de Ambiente
 
-export default defineConfig([
-  globalIgnores(["dist"]),
-  {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs["recommended-typescript"],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+Para que o sistema se conecte ao Firebase e à API, você deve configurar as variáveis de ambiente.
+
+Crie um arquivo chamado `.env` na raiz da pasta frontend.
+
+Adicione as suas chaves do Firebase seguindo o modelo abaixo:
+
+```env
+VITE_FIREBASE_API_KEY="SUA_CHAVE_AQUI"
+VITE_FIREBASE_AUTH_DOMAIN="SEU_DOMINIO_AQUI"
+VITE_FIREBASE_PROJECT_ID="SEU_ID_DO_PROJETO"
+VITE_FIREBASE_STORAGE_BUCKET="SEU_BUCKET_AQUI"
+VITE_FIREBASE_MESSAGING_SENDER_ID="SEU_SENDER_ID"
+VITE_FIREBASE_APP_ID="SEU_APP_ID"
+VITE_API_URL="http://localhost:8000"
 ```
+
+---
+
+## 4. Rodando o Projeto
+
+Para iniciar o servidor de desenvolvimento local, execute:
+
+```bash
+npm run dev
+```
+
+Após o comando, o terminal indicará o endereço local para acesso, geralmente:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 5. Scripts Disponíveis
+
+- `npm run dev`  
+  Inicia o servidor de desenvolvimento com hot-reload.
+
+- `npm run build`  
+  Gera a versão otimizada do projeto para produção na pasta `/dist`.
+
+- `npm run preview`  
+  Visualiza localmente o código gerado pelo comando de build.
