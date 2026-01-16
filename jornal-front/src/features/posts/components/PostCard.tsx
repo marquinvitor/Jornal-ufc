@@ -68,7 +68,7 @@ export const PostCard = ({ post, onTagClick }: PostCardProps) => {
               }}
               className="text-[10px] font-black text-ufc-blue bg-blue-50 px-2 py-1 rounded border border-blue-100 uppercase tracking-widest cursor-pointer hover:bg-ufc-blue hover:text-white transition-all"
             >
-              #{tag}
+              #{tag.toUpperCase()}
             </span>
           ))}
         </div>

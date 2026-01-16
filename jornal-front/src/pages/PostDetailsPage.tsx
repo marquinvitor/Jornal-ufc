@@ -116,7 +116,7 @@ export const PostDetailsPage = () => {
             to={`/feed?filter=${tag}`}
             className="text-[10px] font-bold text-ufc-blue bg-blue-50 px-4 py-1.5 rounded-full hover:bg-ufc-blue hover:text-white transition-all shadow-sm"
           >
-            #{tag}
+            #{tag.toUpperCase()}
           </Link>
         ))}
       </div>
