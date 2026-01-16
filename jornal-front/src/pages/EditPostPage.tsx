@@ -54,6 +54,13 @@ export const EditPostPage = () => {
     if (!id) return;
     setLoading(true);
 
+    const tagsRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9,\s]*$/;
+    if (!tagsRegex.test(formData.tags)) {
+      toast.error("As tags devem conter apenas letras, números e vírgulas.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const payload = {
         titulo: formData.titulo,

@@ -40,6 +40,13 @@ export const CreatePostPage = () => {
     e.preventDefault();
     setLoading(true);
 
+    const tagsRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9,\s]*$/;
+    if (!tagsRegex.test(formData.tags)) {
+      toast.error("As tags devem conter apenas letras, números e vírgulas.");
+      setLoading(false);
+      return;
+    }
+
     try {
       const userId = auth.currentUser?.uid;
 
