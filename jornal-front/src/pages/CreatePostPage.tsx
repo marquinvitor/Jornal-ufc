@@ -36,9 +36,34 @@ export const CreatePostPage = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const validateImage = (url: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.src = url;
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
+    if (formData.imagem_url) {
+      const isValidImage = await validateImage(formData.imagem_url);
+      if (!isValidImage) {
+        toast.error("A URL da imagem fornecida não é válida ou está inacessível.");
+        setLoading(false);
+        return;
+      }
+    }
+
+    const tagsRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ0-9,\s]*$/;
+    if (!tagsRegex.test(formData.tags)) {
+      toast.error("As tags devem conter apenas letras, números e vírgulas.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const userId = auth.currentUser?.uid;

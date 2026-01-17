@@ -32,6 +32,26 @@ export const RegisterForm = () => {
       return;
     }
 
+    const nameRegex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+    if (!nameRegex.test(formData.nomeCompleto)) {
+      toast.error("O nome deve conter apenas letras.");
+      return;
+    }
+
+    const email = formData.emailInstitucional.toLowerCase();
+    if (formData.perfil === "aluno" && !email.endsWith("@alu.ufc.br")) {
+      toast.error("Estudantes devem usar e-mail @alu.ufc.br");
+      return;
+    }
+
+    if (
+      formData.perfil === "professor" &&
+      (!email.endsWith("@ufc.br") || email.endsWith("@alu.ufc.br"))
+    ) {
+      toast.error("Professores devem usar e-mail @ufc.br");
+      return;
+    }
+
     setLoading(true);
 
     try {

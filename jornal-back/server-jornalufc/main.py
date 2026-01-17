@@ -104,7 +104,7 @@ def criar_post(post: PostInput):
         "titulo": post.titulo,
         "conteudo": post.conteudo,
         "categoria": post.categoria,
-        "tags": post.tags,
+        "tags": [tag.lower() for tag in post.tags],
         "imagem_url": post.imagem_url,
         "autor": dados_usuario["nome"],        # Nome vem do banco
         "autor_matricula": dados_usuario.get("matricula"),
@@ -137,7 +137,7 @@ def listar_posts(
 
     # 2. Se mandou tag, filtramos por tag também
     if tag:
-        query = query.where("tags", "array_contains", tag)
+        query = query.where("tags", "array_contains", tag.lower())
 
     # Ordenação automática apenas se não houver filtros (evita erro de índice no Firestore)
     if not any([user_id, categoria, tag]):
@@ -183,7 +183,7 @@ def editar_post(post_id: str, post: PostInput):
         "titulo": post.titulo,
         "conteudo": post.conteudo,
         "categoria": post.categoria,
-        "tags": post.tags,
+        "tags": [tag.lower() for tag in post.tags],
         "imagem_url": post.imagem_url
     })
 

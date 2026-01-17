@@ -80,7 +80,7 @@ useEffect(() => {
             <div className="flex flex-col gap-1">
               <p className="text-lg font-black text-gray-900 uppercase tracking-tighter">
                 Mostrando resultados para:{" "}
-                <span className="text-ufc-blue">#{filtro}</span>
+                <span className="text-ufc-blue">#{filtro.toUpperCase()}</span>
               </p>
             </div>
             <button
