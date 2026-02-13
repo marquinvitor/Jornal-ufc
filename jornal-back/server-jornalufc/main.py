@@ -15,7 +15,7 @@ from firebase_admin import credentials, firestore
 
 load_dotenv()
 
-# Inicialização Firebase
+#inicialização Firebase
 if not firebase_admin._apps:
     cred = credentials.Certificate(os.getenv("CREDS"))
     firebase_admin.initialize_app(cred)
@@ -23,7 +23,6 @@ if not firebase_admin._apps:
 db = firestore.client()
 app = FastAPI(title="API Jornal UFC")
 
-# Configuração de CORS: Essencial para que o Front-end (Vite) consiga acessar a API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
@@ -32,7 +31,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- MODELOS DE DADOS (Enums e Pydantic) ---
+# --- modelo de dados (Enums e Pydantic) ---
 
 class CategoriaEnum(str, Enum):
     RU = "ru"
@@ -41,7 +40,7 @@ class CategoriaEnum(str, Enum):
     EVENTOS = "eventos"
 
 class UserProfileInput(BaseModel):
-    uid: str        # ID gerado pelo Firebase Auth no Front
+    uid: str        # ID gerado pelo firebase auth no front
     nome: str
     email: str
     matricula: str
@@ -63,7 +62,7 @@ class ReactionInput(BaseModel):
 
 @app.post("/users/", tags=["Users"])
 def salvar_perfil_usuario(user: UserProfileInput):
-    # Salva os dados complementares no Firestore usando o UID como chave
+    # salva os dados complementares no firestore usando o UID como chave
     novo_perfil = {
         "nome": user.nome,
         "email": user.email,
@@ -76,7 +75,7 @@ def salvar_perfil_usuario(user: UserProfileInput):
 
 @app.get("/users/{user_id}", tags=["Users"])
 def obter_usuario(user_id: str):
-    # Busca dados de um usuário específico
+    # busca dados de um usuario especifico
     doc = db.collection("users").document(user_id).get()
     if not doc.exists:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
@@ -89,24 +88,24 @@ def obter_usuario(user_id: str):
 # CRIAR POST (Com Autor Automático)
 @app.post("/posts/", tags=["Posts"])
 def criar_post(post: PostInput):
-    # 1. Busca quem é o usuário no banco
+    # 1. busca quem é o usuario no banco
     user_ref = db.collection("users").document(post.user_id)
     user_doc = user_ref.get()
 
     if not user_doc.exists:
         raise HTTPException(status_code=404, detail="Usuário não encontrado. Complete o cadastro primeiro.")
 
-    # 2. Pega os dados do autor
+    # 2. pega os dados do autor
     dados_usuario = user_doc.to_dict()
     
-    # 3. Monta o post com dados seguros
+    # 3. monta o post com dados seguros
     novo_post = {
         "titulo": post.titulo,
         "conteudo": post.conteudo,
         "categoria": post.categoria,
         "tags": [tag.lower() for tag in post.tags],
         "imagem_url": post.imagem_url,
-        "autor": dados_usuario["nome"],        # Nome vem do banco
+        "autor": dados_usuario["nome"],        # nome vem do banco
         "autor_matricula": dados_usuario.get("matricula"),
         "autor_id": post.user_id,
         "autor_tipo": dados_usuario["tipo"],
@@ -125,21 +124,21 @@ def listar_posts(
 ):
     posts_ref = db.collection("posts")
 
-    # Começa a query base
+    # começa a query base
     query = posts_ref
 
-    # 1. Se o Front mandou um user_id, filtramos para mostrar só os posts dele
+    # 1. se o front mandou um user_id, filtramos para mostrar só os posts dele
     if user_id:
         query = query.where("autor_id", "==", user_id)
 
     if categoria:
         query = query.where("categoria", "==", categoria)
 
-    # 2. Se mandou tag, filtramos por tag também
+    # 2. se mandou tag, filtramos por tag também
     if tag:
         query = query.where("tags", "array_contains", tag.lower())
 
-    # Ordenação automática apenas se não houver filtros (evita erro de índice no Firestore)
+    # ordenação automática apenas se não houver filtros (evita erro de índice no Firestore)
     if not any([user_id, categoria, tag]):
         query = query.order_by("data_criacao", direction=firestore.Query.DESCENDING)
 

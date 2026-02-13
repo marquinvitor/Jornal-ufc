@@ -24,7 +24,6 @@ Você já deve possuir o arquivo .json com as credenciais do Firebase (chave de 
 
 Abra o terminal na pasta do projeto e rode:
 
-bash
 pip install fastapi uvicorn firebase-admin python-dotenv
 
 
@@ -33,7 +32,6 @@ pip install fastapi uvicorn firebase-admin python-dotenv
 
 Crie um arquivo chamado .env (sem nome, apenas a extensão) na raiz do projeto e adicione o caminho da sua chave:
 
-env
 CREDS="firebase_key.json"
 
 
